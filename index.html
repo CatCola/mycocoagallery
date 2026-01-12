@@ -129,17 +129,21 @@ const fullImage = document.getElementById("fullImage");
 
 let currentIndex = 0;
 let startX = 0;
+let currentX = 0;
+let isDragging = false;
 
 /* Open modal */
 function openModal(index, event) {
     currentIndex = index;
-    showImage(event);
     modal.style.display = "flex";
+    showImage(event);
 }
 
 /* Show image */
 function showImage(event) {
     fullImage.src = images[currentIndex].src;
+    fullImage.style.transition = "none";
+    fullImage.style.transform = "translateX(0) scale(1)";
 
     if (event) {
         const x = event.clientX / window.innerWidth * 100;
@@ -147,9 +151,9 @@ function showImage(event) {
         fullImage.style.transformOrigin = `${x}% ${y}%`;
     }
 
-    fullImage.style.transform = "scale(0)";
-    fullImage.offsetHeight;
-    fullImage.style.transform = "scale(1)";
+    requestAnimationFrame(() => {
+        fullImage.style.transition = "transform 0.3s ease";
+    });
 }
 
 /* Close */
@@ -158,14 +162,12 @@ function closeModal() {
 }
 
 /* Navigation */
-function nextImage(e) {
-    e.stopPropagation();
+function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
     showImage();
 }
 
-function prevImage(e) {
-    e.stopPropagation();
+function prevImage() {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
     showImage();
 }
@@ -173,26 +175,45 @@ function prevImage(e) {
 /* Keyboard */
 document.addEventListener("keydown", e => {
     if (modal.style.display !== "flex") return;
-
-    if (e.key === "ArrowRight") nextImage(e);
-    if (e.key === "ArrowLeft") prevImage(e);
+    if (e.key === "ArrowRight") nextImage();
+    if (e.key === "ArrowLeft") prevImage();
     if (e.key === "Escape") closeModal();
 });
 
-/* Touch swipe */
+/* TOUCH — FOLLOW FINGER */
 fullImage.addEventListener("touchstart", e => {
     startX = e.touches[0].clientX;
+    isDragging = true;
+    fullImage.style.transition = "none";
 });
 
-fullImage.addEventListener("touchend", e => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
+fullImage.addEventListener("touchmove", e => {
+    if (!isDragging) return;
 
-    if (Math.abs(diff) > 50) {
-        diff > 0 ? nextImage(e) : prevImage(e);
+    currentX = e.touches[0].clientX;
+    const deltaX = currentX - startX;
+
+    fullImage.style.transform = `translateX(${deltaX}px) scale(1)`;
+});
+
+fullImage.addEventListener("touchend", () => {
+    isDragging = false;
+    const deltaX = currentX - startX;
+
+    fullImage.style.transition = "transform 0.3s ease";
+
+    if (Math.abs(deltaX) > 80) {
+        deltaX < 0 ? nextImage() : prevImage();
+    } else {
+        fullImage.style.transform = "translateX(0) scale(1)";
     }
 });
+
+/* Prevent modal close on image */
+fullImage.addEventListener("click", e => e.stopPropagation());
 </script>
+
 
 </body>
 </html>
+
