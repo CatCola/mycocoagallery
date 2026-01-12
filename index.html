@@ -162,12 +162,14 @@ function closeModal() {
 }
 
 /* Navigation */
-function nextImage() {
+function nextImage(e) {
+    e.stopPropagation();   // ⛔ stop modal click
     currentIndex = (currentIndex + 1) % images.length;
     showImage();
 }
 
-function prevImage() {
+function prevImage(e) {
+    e.stopPropagation();   // ⛔ stop modal click
     currentIndex = (currentIndex - 1 + images.length) % images.length;
     showImage();
 }
@@ -216,4 +218,5 @@ fullImage.addEventListener("click", e => e.stopPropagation());
 
 </body>
 </html>
+
 
