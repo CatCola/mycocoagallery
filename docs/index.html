@@ -98,6 +98,58 @@ body {
 .gallery img:hover {
     transform: scale(1.05);
 }
+/* Image wrapper */
+.img-wrap {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Colorful animated border */
+.img-wrap.new {
+    padding: 4px;
+    background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff00a6,
+        #9900ff,
+        #4d5cff,
+        #22c4ff
+    );
+    background-size: 400% 400%;
+    animation: rainbowBorder 6s linear infinite;
+}
+
+@keyframes rainbowBorder {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* Ensure image stays inside */
+.img-wrap img {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* NEW badge inside image */
+.img-wrap.new::after {
+    content: "NEW!";
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 60, 60, 0.9);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(255, 80, 80, 0.8);
+}
+
 
 /* Modal */
 .modal {
@@ -191,7 +243,11 @@ body {
 
 <div class="gallery">
 
+    <div class="img-wrap new">
     <img src="Images/Draw/35.jpg" onclick="openModal(this, event)">
+    </div>
+
+
     <img src="Images/Draw/34.jpg" onclick="openModal(this, event)">
     <img src="Images/Draw/33.jpg" onclick="openModal(this, event)">
     <img src="Images/Draw/32.jpg" onclick="openModal(this, event)">
