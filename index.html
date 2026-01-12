@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Image Gallery</title>
+    <title>My Cocoa Gallery</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,6 +18,21 @@
             font-size: 72px;
             font-weight: bold;
             letter-spacing: 10px;
+            margin-bottom: -10px;
+        }
+        /* SMALL TITLE */
+        .smalltitle1 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: -10px;
+        }
+        .smalltitle2 {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 5px;
             margin-bottom: 40px;
         }
 
@@ -86,15 +101,17 @@
     </style>
 </head>
 <body>
-
+<div class="smalltitle1">MY</div>
 <div class="title">COCOA</div>
+<div class="smalltitle2">GALLERY</div>
 
 <div class="gallery">
+
     <img src="Images/image5.png" onclick="openModal(this, event)">
-    <img src="Images/image1.jpg" onclick="openModal(this, event)">
-    <img src="Images/image2.jpg" onclick="openModal(this, event)">
+    <img src="Images/image4.jpg" onclick="openModal(this, event)">
     <img src="Images/image3.jpg" onclick="openModal(this, event)">
-    <img src="Images/image4.gif" onclick="openModal(this, event)">
+    <img src="Images/image2.jpg" onclick="openModal(this, event)">
+    <img src="Images/image1.jpg" onclick="openModal(this, event)">
 </div>
 
 <!-- Modal -->
